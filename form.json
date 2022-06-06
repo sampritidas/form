@@ -1,1 +1,8 @@
-{"Enter your name:":"sampriti","Enter your BOD":"21","Enter your hobbies":"sing"}
+{
+  "Name": "Sampriti",
+  "DOB": "1999-10-21",
+  "Hobbies": [
+    "Drawing",
+    "Dancing\n"
+  ]
+}
