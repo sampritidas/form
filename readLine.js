@@ -6,7 +6,7 @@ const isNameValid = (name) => {
 };
 
 const isDobValid = (dob) => {
-  return true;
+  return /....-..-../.test(dob) && isFinite(dob.slice(0, 4)) && isFinite(dob.slice(5, 7)) && isFinite(dob.slice(8));
 };
 
 const areHobbiesValid = (hobbies) => {
@@ -22,7 +22,7 @@ const isValidate = (chunk, index) => {
     return isNameValid(chunk);
   }
   if (index === 1) {
-    return isDobValid(chunk + '');
+    return isDobValid(chunk);
   }
   if (index === 2) {
     return areHobbiesValid(chunk);
