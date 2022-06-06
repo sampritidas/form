@@ -1,31 +1,31 @@
 const fs = require('fs');
 const { Iterator } = require('./iterator');
 
-const isNameGrant = (name) => {
+const isNameValid = (name) => {
   return /^......*/.test(name);
 };
 
-const isDobCorrectlyFormed = (dob) => {
-  return true;
+const isDobValid = (dob) => {
+  return /^\d\d\d\d-\d\d-\d\d$/.test(dob);
 };
 
-const isHobbiesCorrectlyFormed = (hobbies) => {
-  return formHobbies(hobbies).length > 0;
+const areHobbiesValid = (hobbies) => {
+  return splitHobbies(hobbies).length > 0;
 };
 
-const formHobbies = (chunk) => {
+const splitHobbies = (chunk) => {
   return chunk.split(',');
 };
 
 const isValidate = (chunk, index) => {
   if (index === 0) {
-    return isNameGrant(chunk);
+    return isNameValid(chunk);
   }
   if (index === 1) {
-    return isDobCorrectlyFormed(chunk);
+    return isDobValid(+chunk);
   }
   if (index === 2) {
-    return isHobbiesCorrectlyFormed(chunk);
+    return areHobbiesValid(chunk);
   }
   if (index === 3) {
     return /[0-9]{10}/.test(chunk);
@@ -37,7 +37,7 @@ const isValidate = (chunk, index) => {
 
 const customisechunk = (chunk, index) => {
   if (index === 2) {
-    return formHobbies(chunk);
+    return splitHobbies(chunk);
   }
   return chunk.trimEnd();
 }
