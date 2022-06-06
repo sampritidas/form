@@ -6,7 +6,7 @@ const isNameValid = (name) => {
 };
 
 const isDobValid = (dob) => {
-  return /^\d\d\d\d-\d\d-\d\d$/.test(dob);
+  return true;
 };
 
 const areHobbiesValid = (hobbies) => {
@@ -22,7 +22,7 @@ const isValidate = (chunk, index) => {
     return isNameValid(chunk);
   }
   if (index === 1) {
-    return isDobValid(+chunk);
+    return isDobValid(chunk + '');
   }
   if (index === 2) {
     return areHobbiesValid(chunk);
