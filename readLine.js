@@ -1,45 +1,32 @@
 const fs = require('fs');
-const { Iterator } = require('./iterator');
+const { QuerryIterator } = require('./querryIterator.js');
+const { ValidateInfo } = require("./validateInfo");
 
-const isNameValid = (name) => {
-  return /^......*/.test(name);
-};
+const isInfoValidate = (info, index) => {
+  const validator = new ValidateInfo(info, index);
 
-const isDobValid = (dob) => {
-  return /....-..-../.test(dob) && isFinite(dob.slice(0, 4)) && isFinite(dob.slice(5, 7)) && isFinite(dob.slice(8));
-};
-
-const areHobbiesValid = (hobbies) => {
-  return splitHobbies(hobbies).length > 0;
-};
-
-const splitHobbies = (chunk) => {
-  return chunk.split(',');
-};
-
-const isValidate = (chunk, index) => {
   if (index === 0) {
-    return isNameValid(chunk);
+    return validator.isNameValid();
   }
   if (index === 1) {
-    return isDobValid(chunk);
+    return validator.isDobValid();
   }
   if (index === 2) {
-    return areHobbiesValid(chunk);
+    return validator.isHobbiesValid();
   }
   if (index === 3) {
-    return /[0-9]{10}/.test(chunk);
+    return validator.isPhoneNoValid();
   }
   if (index === 4 || index === 5) {
-    return chunk.length > 0;
+    return validator.isAddressValid();
   }
 };
 
-const customisechunk = (chunk, index) => {
+const customiseinfo = (info, index) => {
   if (index === 2) {
-    return splitHobbies(chunk);
+    return info.split(',');
   }
-  return chunk.trimEnd();
+  return info.trimEnd();
 }
 
 const customiseFinalDetails = (details) => {
@@ -54,6 +41,15 @@ const customiseFinalDetails = (details) => {
   }
 };
 
+const areQuestionsDone = (details, questions) => {
+  if (details.length === questions.length) {
+    const customizedData = customiseFinalDetails(details);
+    fs.writeFileSync(
+      'form.json', JSON.stringify(customizedData, null, 2), 'utf8');
+    process.stdin.emit('end');
+  }
+};
+
 const readline = (index) => {
   const questions = [
     '\nEnter your Name',
@@ -61,31 +57,20 @@ const readline = (index) => {
     '\nEnter your Hobbies',
     '\nEnter Phone No.',
     '\nEnter Address Line 1',
-    '\nEnter Address Line 2',
-  ];
-
-  const iterate = new Iterator(questions);
-
+    '\nEnter Address Line 2'];
+  const QuerryList = new QuerryIterator(questions);
   const details = [];
 
   process.stdin.setEncoding('utf8');
 
-  process.stdin.on('data', chunk => {
-    if (isValidate(chunk, index)) {
-      details.push(customisechunk(chunk, index));
-      iterate.nextQuestion();
+  process.stdin.on('data', info => {
+    if (isInfoValidate(info, index)) {
+      details.push(customiseinfo(info, index));
+      areQuestionsDone(details, questions);
+      QuerryList.nextQuestion();
       index++;
     } else {
-      iterate.currentQuestion();
-    }
-
-    if (details.length === questions.length) {
-      const customizedData = customiseFinalDetails(details);
-      fs.writeFileSync(
-        'form.json',
-        JSON.stringify(customizedData, null, 2),
-        'utf8');
-      process.stdin.emit('end');
+      QuerryList.currentQuestion();
     }
   });
 
@@ -93,8 +78,6 @@ const readline = (index) => {
     console.log('Thank you');
     process.exit();
   });
-
-  process.stdin.on('close', () => console.log('close'));
 };
 
 exports.readline = readline;

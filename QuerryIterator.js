@@ -1,4 +1,4 @@
-class Iterator {
+class QuerryIterator {
   constructor(qusetions) {
     this.question = qusetions;
     this.index = 0;
@@ -14,4 +14,4 @@ class Iterator {
   }
 }
 
-exports.Iterator = Iterator;
+exports.QuerryIterator = QuerryIterator;

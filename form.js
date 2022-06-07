@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { Iterator } = require('./iterator');
 const { readline } = require("./readLine");
 
 
