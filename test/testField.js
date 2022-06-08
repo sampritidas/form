@@ -14,25 +14,35 @@ describe('Field.showPrompt', () => {
   it('Should give current prompt line', () => {
     const alwaysTrue = () => true;
     const field = new Field('Prompt', '', alwaysTrue, (x) => x);
-
-    const logs = [];
-    const mockLog = (logs) => {
-      return function (response) {
-        logs.push(response);
-      }
-    }
-    const logger = mockLog(logs);
-
-    field.showPrompt(logger);
-    assert.deepStrictEqual(logs, ['Prompt']);
+    field.showPrompt();
+    assert.deepStrictEqual(field.showPrompt(), 'Prompt');
   });
 });
 
-describe('Field.parseResponse', () => {
-  it('Should parse a response based on given parser', () => {
-    const notEmpty = (x) => x;
-    const field = new Field('', '', '', notEmpty);
+describe('Field.getEntry', () => {
+  it('Should give name and parsed response', () => {
+    const alwaysTrue = () => true;
+    const field = new Field('', 'name', alwaysTrue, (x) => x);
+    field.setResponse('something');
 
-    assert.strictEqual(field.parseResponse('One'), 'One');
+    assert.deepStrictEqual(
+      field.getEntry(), ['name', 'something']);
+  });
+});
+
+describe('Field.isFilled', () => {
+  it('Should return true if response not null', () => {
+    const alwaysTrue = () => true;
+    const field = new Field('', 'name', alwaysTrue, (x) => x);
+
+    field.setResponse('something');
+    assert.strictEqual(field.isFilled(), true);
+  });
+
+  it('Should return false if response null', () => {
+    const alwaysTrue = () => true;
+    const field = new Field('', 'name', alwaysTrue, (x) => x);
+
+    assert.strictEqual(field.isFilled(), false);
   });
 });

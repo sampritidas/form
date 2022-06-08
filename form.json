@@ -1,1 +1,10 @@
-{"name":"Sampriti Das","dob":"1999-10-21","hobbies":["Dancing"," Singing"],"phone":"7059358322"}
+{
+  "name": "Sampriti",
+  "dob": "1999-10-21",
+  "hobbies": [
+    "Singing",
+    " Dancing"
+  ],
+  "phone": "7059358322",
+  "address": "106 G.T. Road\nSerampore, Hooghly"
+}

@@ -1,33 +1,36 @@
 class Field {
+  #prompt;
+  #name;
+  #validator;
+  #parser;
   #response;
 
   constructor(prompt, name, validator, parser) {
-    this.prompt = prompt;
-    this.name = name;
-    this.validator = validator;
-    this.parser = parser;
+    this.#prompt = prompt;
+    this.#name = name;
+    this.#validator = validator;
+    this.#parser = parser;
     this.#response = null;
   }
 
+  isFilled() {
+    return this.#response !== null;
+  }
+
   isValid(response) {
-    if (this.validator(response)) {
-      const parsedResponse = this.parser(response);
-      this.#response = parsedResponse;
-      return true;
-    };
-    return false;
+    return this.#validator(response);
   }
 
-  showPrompt(logger) {
-    logger(this.prompt);
+  setResponse(response) {
+    this.#response = response;
   }
 
-  parseResponse(response) {
-    return this.parser(response);
+  showPrompt() {
+    return this.#prompt;
   }
 
   getEntry() {
-    return [this.name, this.#response];
+    return [this.#name, this.#parser(this.#response)];
   }
 }
 

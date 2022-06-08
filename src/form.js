@@ -1,37 +1,48 @@
 class Form {
+  #fields;
+  #index;
   constructor() {
-    this.fields = [];
-    this.index = 0;
+    this.#fields = [];
+    this.#index = 0;
   }
 
   registerField(field) {
-    this.fields.push(field);
+    this.#fields.push(field);
   }
 
-  isResponseValid(response, logger) {
-    if (this.fields[this.index].isValid(response)) {
-      this.index++;
-      return true;
+  storeResponse(response) {
+    if (this.isResponseValid(response)) {
+      this.#fields[this.#index].setResponse(response);
+    }
+    if (this.#fields[this.#index].isFilled()) {
+      this.#index++;
+    }
+  }
+
+  isResponseValid(response) {
+    if (!this.#fields[this.#index].isValid(response)) {
+      throw new Error('Invalid Response');
     };
-    logger('Invalid Response');
-    return false;
+    return true;
   };
+
+  hasRemainingFields() {
+    return !this.#fields.every((field) => {
+      return field.isFilled();
+    })
+  }
 
   getResponses() {
     const responses = {};
-    this.fields.forEach((field) => {
+    this.#fields.forEach((field) => {
       const [name, response] = field.getEntry();
       responses[name] = response;
     });
     return responses;
   }
 
-  showCurrentField(logger) {
-    return this.fields[this.index].showPrompt(logger);
-  }
-
-  isFormFilled() {
-    return this.fields.length === this.index;
+  showCurrentField() {
+    return this.#fields[this.#index].showPrompt();
   }
 }
 

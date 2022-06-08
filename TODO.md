@@ -1,13 +1,16 @@
  **TODO**
- 
- - [ ] Implement multiLineField for address
+
+ - [ ] Add test cases for onFormReady
  - [ ] Add test cases for validators and parsers
  - [ ] Add test cases for readResponse
- - [ ] Add test cases for form class methods
- - [ ] Make function to do writeFileSync
 
  **DONE**
 
+ - [x] Separate functions in different files
+ - [x] Try to remove logger so deep
+ - [x] Add test cases for form class methods
+ - [x] Make function to do writeFileSync
+ - [x] Implement multiLineField for address
  - [x] Remove parallal array from form class
  - [x] Added test cases for field class methods
  - [x] Make one function to register field in main

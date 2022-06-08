@@ -1,27 +1,39 @@
 class MultiLineField {
+  #prompts;
+  #name;
+  #validator;
+  #parser;
+  #index;
+  #responses;
+
   constructor(prompts, name, validator, parser) {
-    this.prompts = prompts;
-    this.name = name;
-    this.validator = validator;
-    this.parser = parser;
-    this.index = 0;
+    this.#prompts = prompts;
+    this.#name = name;
+    this.#validator = validator;
+    this.#parser = parser;
+    this.#index = 0;
+    this.#responses = [];
+  }
+
+  isFilled() {
+    return this.#responses.length === this.#prompts.length;
   }
 
   isValid(response) {
-    if (this.validator(response)) {
-      this.index++;
-      this.showPrompt(logger)
-    };
-    this.showPrompt[this.index];
-    // return this.validator(response);
+    return this.#validator(response);
   }
 
-  showPrompt(logger) {
-    logger(this.prompt);
+  setResponse(response) {
+    this.#responses.push(response);
+    this.#index++;
   }
 
-  parseResponse(response) {
-    return this.parser(response);
+  showPrompt() {
+    return this.#prompts[this.#index];
+  }
+
+  getEntry() {
+    return [this.#name, this.#parser(this.#responses)];
   }
 }
 
