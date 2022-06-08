@@ -20,15 +20,16 @@ class Form {
   };
 
   getResponses() {
-    return this.responses;
+    const [Name, Dob, Hobbies, Phn, Add1, Add2] = this.responses;
+    return { Name, Dob, Hobbies, Phn, Address: `${Add1} ${Add2}` };
   }
 
-  showCurrentField() {
-    return this.fields[this.index].showPrompt();
+  showCurrentField(logger) {
+    return this.fields[this.index].showPrompt(logger);
   }
 
-  showFields() {
-    console.log(this.fields);
+  isFormFilled() {
+    return this.fields.length === this.responses.length;
   }
 }
 

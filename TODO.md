@@ -1,13 +1,17 @@
  **TODO**
-
- - [ ] Make one function to register field in main
+ 
+ - [ ] Added test cases for validators and parsers
+ - [ ] Added test cases for readResponse
+ - [ ] Added test cases for form class methods
  - [ ] Make function to do writeFileSync
- - [ ] Add address line 1 and address line 2
- - [ ] Make method which check the frorm filled or not
 
  **DONE**
 
  
+ - [x] Added test cases for field class methods
+ - [x] Make one function to register field in main
+ - [x] Make method which check the form filled or not
+ - [x] Add address line 1 and address line 2
  - [x] Remove readLine
  - [x] Remove querryIterator
  - [x] Transfer responsibities of readline to readResponse function

@@ -10,8 +10,8 @@ class Field {
     return this.validator(response);
   }
 
-  showPrompt() {
-    console.log(this.prompt);
+  showPrompt(logger) {
+    logger(this.prompt);
   }
 
   parseResponse(response) {
