@@ -1,11 +1,35 @@
-const fs = require('fs');
-const { readline } = require("./readLine");
+class Form {
+  constructor() {
+    this.fields = [];
+    this.index = 0;
+    this.responses = [];
+  }
 
+  registerField(field) {
+    this.fields.push(field);
+  }
 
-const main = () => {
-  const index = 0;
-  console.log('Enter your Name');
-  readline(index);
+  isResponseValid(response) {
+    if (this.fields[this.index].isValid(response)) {
+      const parsedResponse = this.fields[this.index].parseResponse(response);
+      this.responses.push(parsedResponse);
+      this.index++;
+      return true;
+    };
+    return false;
+  };
+
+  getResponses() {
+    return this.responses;
+  }
+
+  showCurrentField() {
+    return this.fields[this.index].showPrompt();
+  }
+
+  showFields() {
+    console.log(this.fields);
+  }
 }
 
-main();
+module.exports = { Form };
