@@ -2,26 +2,28 @@ class Form {
   constructor() {
     this.fields = [];
     this.index = 0;
-    this.responses = [];
   }
 
   registerField(field) {
     this.fields.push(field);
   }
 
-  isResponseValid(response) {
+  isResponseValid(response, logger) {
     if (this.fields[this.index].isValid(response)) {
-      const parsedResponse = this.fields[this.index].parseResponse(response);
-      this.responses.push(parsedResponse);
       this.index++;
       return true;
     };
+    logger('Invalid Response');
     return false;
   };
 
   getResponses() {
-    const [Name, Dob, Hobbies, Phn, Add1, Add2] = this.responses;
-    return { Name, Dob, Hobbies, Phn, Address: `${Add1} ${Add2}` };
+    const responses = {};
+    this.fields.forEach((field) => {
+      const [name, response] = field.getEntry();
+      responses[name] = response;
+    });
+    return responses;
   }
 
   showCurrentField(logger) {
@@ -29,7 +31,7 @@ class Form {
   }
 
   isFormFilled() {
-    return this.fields.length === this.responses.length;
+    return this.fields.length === this.index;
   }
 }
 

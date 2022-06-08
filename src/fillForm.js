@@ -3,7 +3,7 @@ const { Field } = require('./field.js');
 const { Form } = require('./form.js');
 
 function readResponse(form, response, logger, writeFile) {
-  if (!form.isResponseValid(response)) {
+  if (!form.isResponseValid(response, logger)) {
     form.showCurrentField(logger);
     return;
   }
@@ -31,19 +31,22 @@ const registerForm = (form, ...fields) => {
   })
 };
 
-const main = () => {
+const createForm = () => {
   const nameField = new Field('Enter name', 'name', isMoreThanFive, identity);
   const dobField = new Field('Enter dob', 'dob', isYyyyMmDd, identity);
   const hobbiesField = new Field('Enter hobbies', 'hobbies', notEmpty, split);
   const phoneField = new Field('Enter phn no.', 'phone', is10digits, identity);
-  const add1Field = new Field('Enter Address line 1', 'add1', notEmpty, identity);
-  const add2Field = new Field('Enter Address line 2', 'add2', notEmpty, identity);
 
   const newForm = new Form();
 
   registerForm(newForm,
-    nameField, dobField, hobbiesField, phoneField, add1Field, add2Field);
+    nameField, dobField, hobbiesField, phoneField);
 
+  return newForm;
+};
+
+const main = () => {
+  const newForm = createForm();
   process.stdin.setEncoding('utf8');
 
   console.log('Enter name');
