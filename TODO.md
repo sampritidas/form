@@ -1,9 +1,8 @@
  **TODO**
 
- - [ ] Add test cases for validators and parsers
-
  **DONE**
 
+ - [x] Add test cases for validators and parsers
  - [x] Add test cases for registerResponse
  - [x] Add test cases for multiLineField class
  - [x] Separate functions in different files

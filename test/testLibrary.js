@@ -1,7 +1,7 @@
 const assert = require('assert');
 const { Field } = require("../src/field");
 const { Form } = require("../src/form");
-const { registerResponse } = require("../src/library");
+const { registerResponse, isMoreThanFive, isYyyyMmDd, notEmpty, is10digits } = require("../src/library");
 
 describe('registerResponse', () => {
   it('Should register given response and show current field', () => {
@@ -60,5 +60,45 @@ describe('registerResponse', () => {
       dob: 'dobContent',
       name: 'nameContent',
     }]);
+  });
+});
+
+describe('isMoreThanFive', () => {
+  it('Should return true if name more than equal 5', () => {
+    assert.strictEqual(isMoreThanFive('something'), true);
+  });
+
+  it('Should return false if name not more than equal 5', () => {
+    assert.strictEqual(isMoreThanFive('some'), false);
+  });
+});
+
+describe('isYyyyMmDd', () => {
+  it('Should return true if parameter in date format', () => {
+    assert.strictEqual(isYyyyMmDd('1999-10-21'), true);
+  });
+
+  it('Should return false if parameter is not in date format', () => {
+    assert.strictEqual(isYyyyMmDd('1999-10'), false);
+  });
+});
+
+describe('notEmpty', () => {
+  it('Should return true if parameter not empty', () => {
+    assert.strictEqual(notEmpty('some'), true);
+  });
+
+  it('Should return false if parameter empty', () => {
+    assert.strictEqual(notEmpty(''), false);
+  });
+});
+
+describe('is10Digit', () => {
+  it('Should return true if parameter 10 digit', () => {
+    assert.strictEqual(is10digits('1234567890'), true);
+  });
+
+  it('Should return false if parameter is not 10 digit', () => {
+    assert.strictEqual(is10digits('12345'), false);
   });
 });
