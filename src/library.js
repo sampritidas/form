@@ -13,13 +13,7 @@ const registerForm = (form, ...fields) => {
   })
 };
 
-const onFormReady = (content, logger, writeFile) => {
-  writeFile('form.json', JSON.stringify(content, null, 2), 'utf8');
-  logger('Thank you');
-  process.exit();
-}
-
-function registerResponse(form, response, logger, writeFile) {
+const registerResponse = (form, response, onFormReady, logger) => {
   try {
     form.storeResponse(response);
   } catch (error) {
@@ -30,7 +24,7 @@ function registerResponse(form, response, logger, writeFile) {
     logger(form.showCurrentField());
     return;
   }
-  onFormReady(form.getResponses(), logger, writeFile);
+  onFormReady(form.getResponses());
 };
 
 module.exports = {

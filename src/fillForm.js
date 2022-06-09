@@ -28,15 +28,20 @@ const createForm = () => {
 
   return newForm;
 };
+const onFormReady = (content,) => {
+  fs.writeFileSync('form.json', JSON.stringify(content, null, 2), 'utf8');
+  console.log('Thank you');
+  process.exit();
+};
 
 const main = () => {
   const form = createForm();
-  process.stdin.setEncoding('utf8');
 
+  process.stdin.setEncoding('utf8');
   console.log(form.showCurrentField());
   process.stdin.on('data', (response) => {
     registerResponse(
-      form, response.trim(), console.log, fs.writeFileSync);
+      form, response.trim(), onFormReady, console.log);
   });
 };
 

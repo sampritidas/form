@@ -1,11 +1,10 @@
  **TODO**
 
- - [ ] Add test cases for onFormReady
  - [ ] Add test cases for validators and parsers
- - [ ] Add test cases for readResponse
 
  **DONE**
 
+ - [x] Add test cases for registerResponse
  - [x] Add test cases for multiLineField class
  - [x] Separate functions in different files
  - [x] Try to remove logger so deep
