@@ -2,6 +2,7 @@
 
  **DONE**
 
+ - [x] Add app level test for fillForm
  - [x] Add test cases for validators and parsers
  - [x] Add test cases for registerResponse
  - [x] Add test cases for multiLineField class

@@ -1,12 +1,12 @@
 const fs = require('fs');
-const lib = require('./library.js');
+const lib = require('./src/library.js');
 const { registerResponse, registerForm, isMoreThanFive } = lib;
 const { isYyyyMmDd, notEmpty, is10digits } = lib;
 const { identity, split, concat } = lib;
 
-const { Field } = require('./field.js');
-const { Form } = require('./form.js');
-const { MultiLineField } = require('./mutliLineField.js');
+const { Field } = require('./src/field.js');
+const { Form } = require('./src/form.js');
+const { MultiLineField } = require('./src/mutliLineField.js');
 
 const createAddressField = () => {
   const prompts = ['Enter address line 1', 'Enter address line 2'];
@@ -29,7 +29,7 @@ const createForm = () => {
   return newForm;
 };
 const onFormReady = (content,) => {
-  fs.writeFileSync('form.json', JSON.stringify(content, null, 2), 'utf8');
+  fs.writeFileSync('form.json', JSON.stringify(content), 'utf8');
   console.log('Thank you');
   process.exit();
 };
@@ -39,9 +39,11 @@ const main = () => {
 
   process.stdin.setEncoding('utf8');
   console.log(form.showCurrentField());
-  process.stdin.on('data', (response) => {
-    registerResponse(
-      form, response.trim(), onFormReady, console.log);
+  process.stdin.on('data', (chunk) => {
+    const responses = chunk.trim().split('\n');
+    responses.forEach(response =>
+      registerResponse(
+        form, response, onFormReady, console.log));
   });
 };
 
