@@ -6,6 +6,7 @@
 
  **DONE**
 
+ - [x] Add test cases for multiLineField class
  - [x] Separate functions in different files
  - [x] Try to remove logger so deep
  - [x] Add test cases for form class methods
